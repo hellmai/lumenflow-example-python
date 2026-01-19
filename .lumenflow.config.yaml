@@ -1,0 +1,53 @@
+# LumenFlow Configuration for Python Projects
+# Documentation: https://lumenflow.dev/reference/config
+
+version: "1.0"
+
+# Project identification
+project:
+  name: "example-python-project"
+  description: "Example Python project demonstrating LumenFlow workflow"
+
+# Delivery lanes configuration
+lanes:
+  - name: Core
+    scope: "src/**"
+  - name: Tests
+    scope: "tests/**"
+  - name: Documentation
+    scope: "docs/**"
+
+# Quality gates configuration
+gates:
+  preset: "python"
+  
+  # Format check (Ruff format)
+  format:
+    enabled: true
+    command: "ruff format --check ."
+    fix_command: "ruff format ."
+  
+  # Linting (Ruff)
+  lint:
+    enabled: true
+    command: "ruff check ."
+    fix_command: "ruff check . --fix"
+  
+  # Type checking (mypy)
+  typecheck:
+    enabled: true
+    command: "mypy src/"
+  
+  # Tests (pytest)
+  test:
+    enabled: true
+    command: "pytest"
+    coverage:
+      enabled: true
+      threshold: 80
+
+# WU (Work Unit) settings
+wu:
+  spec_dir: "docs/04-operations/tasks/wu"
+  status_file: "docs/04-operations/tasks/status.md"
+  stamps_dir: ".beacon/stamps"
